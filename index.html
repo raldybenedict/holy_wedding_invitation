@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding of Raldy Benedict & Angelica Libriana Soewito</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F5F2; /* Soft beige background */
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        /* Style for the background video */
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            object-fit: cover; /* Cover the entire screen */
+            filter: brightness(1); /* Darken the video to make text readable */
+        }
+        /* Add a subtle overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        /* Custom animation for fade-in effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        /* Simple spinner for loading states */
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(200,200,200,0.3);
+            border-top-color: #78350f; /* amber-900 */
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Invitation Cover -->
+    <div id="invitation-cover" class="fixed inset-0 bg-cover bg-center z-50 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-1000 ease-in-out" style="background-image: url('https://res.cloudinary.com/drmpxikjj/image/upload/v1760244322/RED_1125-2_aaxpue.jpg');">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10 fade-in text-white">
+            <p class="text-xl text-stone-200">You are invited to the wedding of</p>
+            <h1 class="text-6xl md:text-8xl my-4 font-serif text-shadow">
+                Raldy & Angelica
+            </h1>
+            <button id="open-invitation-btn" class="mt-8 bg-amber-800 text-white font-bold py-3 px-8 rounded-full hover:bg-amber-900 transition-colors duration-300 shadow-lg">
+                <i class="fas fa-envelope-open mr-2"></i> Open Invitation
+            </button>
+        </div>
+    </div>
+
+
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 ease-in-out">
+        <!-- 1. Background Video (will remain muted) -->
+        <video autoplay muted loop id="bg-video">
+            <source src="https://res.cloudinary.com/drmpxikjj/video/upload/v1760234193/Wedding_Video_By_Ola_V20251011_hbigx7.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Hero Section -->
+        <header class="relative bg-white/50 min-h-screen flex flex-col items-center justify-center text-white text-center p-4">
+            <div class="overlay"></div>
+            <div class="relative z-10">
+                <h3 class="text-2xl md:text-3xl font-light tracking-wider">THE WEDDING OF</h3>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl my-4 font-serif text-shadow">
+                    Raldy & Angelica
+                </h1>
+                <p class="text-xl md:text-2xl">
+                    We are Getting Married!
+                </p>
+                <div class="mt-8 border-t border-b border-white/50 py-4 px-8 inline-block">
+                    <!-- EDIT DATE -->
+                    <p class="text-2xl tracking-widest">15 November 2025</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="relative bg-white/80 backdrop-blur-sm z-10">
+            <!-- Countdown Section -->
+            <section class="py-20 text-center bg-stone-100 bg-opacity-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-4">Counting Down The Days</h2>
+                    <div id="countdown" class="flex justify-center space-x-4 md:space-x-8 mt-8 text-amber-800">
+                        <div class="text-center p-4 bg-white rounded-lg shadow-lg w-24">
+                            <span id="days" class="text-4xl font-bold">00</span>
+                            <span class="block text-sm">Days</span>
+                        </div>
+                        <div class="text-center p-4 bg-white rounded-lg shadow-lg w-24">
+                            <span id="hours" class="text-4xl font-bold">00</span>
+                            <span class="block text-sm">Hours</span>
+                        </div>
+                        <div class="text-center p-4 bg-white rounded-lg shadow-lg w-24">
+                            <span id="minutes" class="text-4xl font-bold">00</span>
+                            <span class="block text-sm">Minutes</span>
+                        </div>
+                        <div class="text-center p-4 bg-white rounded-lg shadow-lg w-24">
+                            <span id="seconds" class="text-4xl font-bold">00</span>
+                            <span class="block text-sm">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Opening Greeting -->
+            <section class="py-20 text-center">
+                <div class="container mx-auto px-6 max-w-3xl">
+                    <h3 class="text-3xl font-serif italic text-gray-600 mb-6">"I have found the one whom my soul loves." </h3>
+                    <p class="text-lg text-gray-500">(Song of Solomon 3:4)</p>
+                </div>
+            </section>
+
+            <!-- 2. Prewedding Video -->
+            <section id="video" class="py-20">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-12">Our Story</h2>
+                    <div class="aspect-w-16 aspect-h-9 rounded-lg shadow-2xl overflow-hidden">
+                        <iframe
+                            id="prewedding-video-player"
+                            src=""
+                            data-src="https://player.cloudinary.com/embed/?cloud_name=drmpxikjj&public_id=Raldy_Angelica_gicez1&player[autoplay]=true&player[muted]=false"
+                            width="640"
+                            height="360" 
+                            style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            frameborder="0"
+                        ></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Prewedding Photos -->
+            <section id="gallery" class="py-20 bg-stone-100 bg-opacity-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl md:text-5xl font-serif text-center text-amber-900 mb-12">Our Moments</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="overflow-hidden rounded-lg shadow-lg"><img src="https://res.cloudinary.com/drmpxikjj/image/upload/v1760231298/RED_9703_ntzmoq.jpg" alt="Prewedding Photo 1" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                        <div class="overflow-hidden rounded-lg shadow-lg col-span-1 md:col-span-2"><img src="https://res.cloudinary.com/drmpxikjj/image/upload/v1760231467/RED_0634-2_ywekes.jpg" alt="Prewedding Photo 2" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                        <div class="overflow-hidden rounded-lg shadow-lg"><img src="https://res.cloudinary.com/drmpxikjj/image/upload/v1760231472/RED_1574_rxmrop.jpg" alt="Prewedding Photo 3" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                        <div class="overflow-hidden rounded-lg shadow-lg col-span-1 md:col-span-2"><img src="https://res.cloudinary.com/drmpxikjj/image/upload/v1760243900/Monochrome_bii4yn.png" alt="Prewedding Photo 4" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                        <div class="overflow-hidden rounded-lg shadow-lg"><img src="https://res.cloudinary.com/drmpxikjj/image/upload/v1760231474/RED_0718_ukgfp8.jpg" alt="Prewedding Photo 5" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                        <div class="overflow-hidden rounded-lg shadow-lg"><img src="https://res.cloudinary.com/drmpxikjj/image/upload/v1760231459/RED_9839-2_gu2bnt.jpg" alt="Prewedding Photo 6" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Location, Schedule, Google Maps -->
+            <section id="details" class="py-20 bg-stone-100 bg-opacity-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl md:text-5xl font-serif text-center text-amber-900 mb-12">Event Details</h2>
+                    <div class="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
+                        <!-- Ceremony -->
+                        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                            <h3 class="text-3xl font-serif text-amber-800 mb-4">Holy Matrimony</h3>
+                            <p class="text-lg font-semibold">Saturday, 15 November 2025</p>
+                            <p class="text-gray-600 mb-4">10:00 - 12:00 WIB</p>
+                            <p class="font-bold">St Bernadet Church, Graha Raya</p>
+                            <p class="text-gray-600">Jl. Boulevard Graha Raya No.Kav.12, RT.007/RW.004, Sudimara Pinang, Kec. Pinang, Kota Tangerang, Banten 15145</p>
+                            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+Benedict+%26+Angelica+(Holy+Matrimony)&dates=20251115T030000Z/20251115T050000Z&details=Holy+Matrimony+for+Benedict+%26+Angelica.&location=St+Bernadet+Church,+Graha+Raya,+Tangerang" target="_blank" class="inline-block mt-4 bg-amber-700 text-white font-bold py-2 px-4 rounded-full hover:bg-amber-800 transition-colors duration-300 text-sm">
+                                <i class="far fa-calendar-plus mr-2"></i>Add to Calendar
+                            </a>
+                            <div class="mt-6 rounded-lg shadow-md overflow-hidden">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2556581933063!2d106.68355057470238!3d-6.229988061011154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69fa2fa6d43e17%3A0xf49ef5a544f80bc0!2sGereja%20Katolik%20Paroki%20Santa%20Bernadet%2C%20Pinang!5e0!3m2!1sid!2sid!4v1758433285130!5m2!1sid!2sid" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 5. RSVP -->
+            <section id="rsvp" class="py-20">
+                <div class="container mx-auto px-4 max-w-2xl text-center">
+                    <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-4">Are You Attending?</h2>
+                    <p class="text-gray-600 mb-8">Please RSVP by 31 October 2025 to let us know you're coming.</p>
+                    
+                    <form id="rsvp-form" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSf0fzGW7uo4C6OZcOEwU9fslLhxrgWXCpci93-G5heloALyzA/formResponse" method="POST">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-bold mb-2 text-left">Full Name *</label>
+                            <input type="text" id="name" name="entry.616690200" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-gray-700 font-bold mb-2 text-left">Phone Number *</label>
+                            <input type="tel" id="phone" name="entry.1503745877" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                         <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-bold mb-2 text-left">Email(Optional)</label>
+                            <input type="email" id="email" name="entry.1992540605" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="mb-4 text-left">
+                            <label class="block text-gray-700 font-bold mb-2">Confirmation *</label>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <input type="radio" id="attend" name="entry.1506893492" value="Yes, I will attend" checked class="mr-2 h-4 w-4">
+                                    <label for="attend">Yes, I will attend</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="not-attending-confirm" name="entry.1506893492" value="Sorry, I can't attend, may our prayers be with you" class="mr-2 h-4 w-4">
+                                    <label for="not-attending-confirm">Sorry, I can't attend</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-6 text-left">
+                            <label class="block text-gray-700 font-bold mb-2">Number of Guests Attending *</label>
+                             <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <input type="radio" id="guests-1" name="entry.1879301541" value="1 person" checked class="mr-2 h-4 w-4">
+                                    <label for="guests-1">1 Person</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="radio" id="guests-2" name="entry.1879301541" value="2 people" class="mr-2 h-4 w-4">
+                                    <label for="guests-2">2 People</label>
+                                </div>
+                                 <div class="flex items-center">
+                                    <input type="radio" id="guests-0" name="entry.1879301541" value="Sorry, I can't attend, may our prayers be with you" class="mr-2 h-4 w-4">
+                                    <label for="guests-0">Not Attending</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-6 mt-6 border-t border-gray-200 pt-6">
+                            <label for="wish-output" class="block text-gray-700 font-bold mb-2 text-left">Leave a Wish for the Couple</label>
+                            <textarea id="wish-output" name="entry.472063576" class="w-full h-32 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Your heartfelt wish..."></textarea>
+                        </div>
+    
+                        <button type="submit" class="w-full bg-amber-800 text-white font-bold py-3 px-4 rounded-md hover:bg-amber-900 transition-colors duration-300">
+                            SEND RSVP
+                        </button>
+                    </form>
+                    <div id="thank-you-message" class="hidden mt-8 text-lg text-green-700 bg-green-100 p-4 rounded-lg">
+                        Thank you for your response!
+                    </div>
+                </div>
+            </section>
+            
+            
+            <!-- 6. Digital Gifts -->
+            <section id="gifts" class="py-20 bg-stone-100 bg-opacity-50">
+                <div class="container mx-auto px-4 max-w-2xl text-center">
+                    <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-4">Wedding Gift</h2>
+                    <p class="text-gray-600 mb-8">Your presence at our wedding is the greatest gift of all. However, should you wish to honour us with a gift, a contribution to our wishing well would be warmly appreciated.</p>
+                    <div class="bg-white p-8 rounded-lg shadow-lg inline-block">
+                        <p class="font-bold text-lg mb-4">For Digital Gifts</p>
+                        <img src="https://placehold.co/300x300/e2e8f0/334155?text=QRIS+Barcode" alt="QRIS Barcode" class="mx-auto w-64 h-64">
+                        <p class="mt-4 text-gray-600">Scan with your favorite e-wallet app.</p>
+                        <p class="mt-4 text-gray-600">BCA 4830318041 (Raldy Benedict)</p>
+                        <p class="mt-4 text-gray-600">BCA 6041074415 (Angelica Libriana S.)</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    
+        <footer class="text-center py-12 bg-amber-900 text-white">
+            <p class="text-3xl font-serif">See you on our special day!</p>
+            <h3 class="text-xl font-serif my-2">
+                ~Raldy & Angelica~
+            </h3>
+        </footer>
+    </div>
+
+    <script>
+        // Open Invitation Logic
+        const openButton = document.getElementById('open-invitation-btn');
+        const coverPage = document.getElementById('invitation-cover');
+        const mainContent = document.getElementById('main-content');
+        const backgroundVideo = document.getElementById('bg-video');
+        const preweddingVideoPlayer = document.getElementById('prewedding-video-player');
+
+        openButton.addEventListener('click', () => {
+             // Set the main background video to play, but keep it muted.
+            backgroundVideo.muted = true;
+            backgroundVideo.play().catch(error => {
+                console.log("Browser prevented background video from playing:", error);
+            });
+
+            // Dynamically set the prewedding iframe src to trigger its autoplay with sound
+            if (preweddingVideoPlayer) {
+                preweddingVideoPlayer.src = preweddingVideoPlayer.dataset.src;
+            }
+
+            // Fade out cover
+            coverPage.classList.add('opacity-0');
+
+            // Fade in main content
+            mainContent.classList.remove('opacity-0');
+
+            // Remove cover from the DOM after transition
+            setTimeout(() => {
+                coverPage.style.display = 'none';
+            }, 1000); // This should match the transition duration
+        });
+
+
+        // Countdown Timer Logic
+        const countDownDate = new Date("Nov 15, 2025 10:00:00").getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "<div class='text-center text-2xl font-serif text-amber-900'>The big day is here!</div>";
+            }
+        }, 1000);
+
+        // RSVP Form submission logic for background submission
+        const rsvpForm = document.getElementById('rsvp-form');
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default redirect
+
+            const formData = new FormData(rsvpForm);
+            const actionUrl = rsvpForm.action;
+
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Important for submitting to Google Forms without errors
+            }).then(() => {
+                // This block runs after the data is sent
+                rsvpForm.style.display = 'none';
+                document.getElementById('thank-you-message').style.display = 'block';
+            }).catch(error => {
+                console.error('Error submitting form:', error);
+                alert('There was an error submitting your RSVP. Please try again.');
+            });
+        });
+
+
+    </script>
+</body>
+</html>
+
