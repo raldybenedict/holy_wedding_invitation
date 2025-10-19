@@ -74,7 +74,7 @@
     </style>
 </head>
 <body class="text-gray-800">
-<audio id="audio-unlocker" muted playsinline></audio>
+
     <!-- Invitation Cover -->
     <div id="invitation-cover" class="fixed inset-0 bg-cover bg-center z-50 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-1000 ease-in-out" style="background-image: url('https://res.cloudinary.com/drmpxikjj/image/upload/v1760244322/RED_1125-2_aaxpue.jpg');">
         <div class="absolute inset-0 bg-black/50"></div>
@@ -151,21 +151,24 @@
 
             <!-- 2. Prewedding Video -->
             <section id="video" class="py-20">
-                <div class="container mx-auto px-4 text-center">
-                    <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-12">Our Story</h2>
-                    <div class="aspect-w-16 aspect-h-9 rounded-lg shadow-2xl overflow-hidden bg-black">
-                        <video 
-                            id="prewedding-video-player"
-                            class="w-full h-full"
-                            controls
-                            playsinline
-                            data-src="https://res.cloudinary.com/drmpxikjj/video/upload/Raldy_Angelica_gicez1.mp4"
-                        >
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                </div>
-            </section>
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-12">Our Story</h2>
+                    <div class="aspect-w-16 aspect-h-9 rounded-lg shadow-2xl overflow-hidden">
+                        <iframe
+                            id="prewedding-video-player"
+                            src=""
+                            data-src="https://player.cloudinary.com/embed/?cloud_name=drmpxikjj&public_id=Raldy_Angelica_gicez1&player[autoplay]=true&player[muted]=false&playsinline"
+                            width="640"
+                            height="360" 
+                            style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            playsinline
+                            allowfullscreen
+                            frameborder="0"
+                        ></iframe>
+                    </div>
+                </div>
+            </section>
 
             <!-- 3. Prewedding Photos -->
             <section id="gallery" class="py-20 bg-stone-100 bg-opacity-50">
@@ -293,7 +296,7 @@
         </footer>
     </div>
 
-<script>
+    <script>
         // Open Invitation Logic
         const openButton = document.getElementById('open-invitation-btn');
         const coverPage = document.getElementById('invitation-cover');
@@ -302,18 +305,13 @@
         const preweddingVideoPlayer = document.getElementById('prewedding-video-player');
 
         openButton.addEventListener('click', () => {
-            // --- START OF NEW FIX ---
-            // This is the most direct way to unlock audio on iOS.
-            // 1. We unmute the background video.
-            backgroundVideo.muted = false;
-            // 2. We play it. This is the user-initiated action that iOS needs.
-            backgroundVideo.play().catch(() => {});
-            // 3. We immediately mute it again. This happens too fast for any sound to be heard,
-            //    but the browser has now registered that the user has allowed audio playback.
+             // Set the main background video to play, but keep it muted.
             backgroundVideo.muted = true;
-            // --- END OF NEW FIX ---
+            backgroundVideo.play().catch(error => {
+                console.log("Browser prevented background video from playing:", error);
+            });
 
-            // Now that audio is "unlocked" for the page, we can load the prewedding video.
+            // Dynamically set the prewedding iframe src to trigger its autoplay with sound
             if (preweddingVideoPlayer) {
                 preweddingVideoPlayer.src = preweddingVideoPlayer.dataset.src;
             }
@@ -375,14 +373,11 @@
                 alert('There was an error submitting your RSVP. Please try again.');
             });
         });
-    </script>
 
+
+    </script>
 </body>
 </html>
-
-
-
-
 
 
 
