@@ -302,36 +302,23 @@
         const mainContent = document.getElementById('main-content');
         const backgroundVideo = document.getElementById('bg-video');
         const preweddingVideoPlayer = document.getElementById('prewedding-video-player');
-        // --- START OF NEW CODE ---
-        // 1. Get the new audio element we added to the HTML
-        const audioUnlocker = document.getElementById('audio-unlocker');
-        // --- END OF NEW CODE ---
 
         openButton.addEventListener('click', () => {
-            // --- START OF UPDATED FIX ---
-            // 2. Play the muted audio element. This is a more reliable way
-            //    to signal user interaction and unlock audio for the page on iOS.
-            if (audioUnlocker) {
-                audioUnlocker.play().catch(() => {});
-            }
-            // --- END OF UPDATED FIX ---
-
-            // Set the main background video to play, but keep it muted.
+            // --- START OF NEW FIX ---
+            // This is the most direct way to unlock audio on iOS.
+            // 1. We unmute the background video.
+            backgroundVideo.muted = false;
+            // 2. We play it. This is the user-initiated action that iOS needs.
+            backgroundVideo.play().catch(() => {});
+            // 3. We immediately mute it again. This happens too fast for any sound to be heard,
+            //    but the browser has now registered that the user has allowed audio playback.
             backgroundVideo.muted = true;
-            backgroundVideo.play().catch(error => {
-                console.log("Browser prevented background video from playing:", error);
-            });
+            // --- END OF NEW FIX ---
 
-            // Dynamically set the prewedding iframe src to trigger its autoplay with sound.
-            // --- START OF UPDATED FIX ---
-            // 3. We add a tiny delay. This gives iOS a moment to process the "audio unlock"
-            //    before the iframe requests to play its video with sound.
-            setTimeout(() => {
-                if (preweddingVideoPlayer) {
-                    preweddingVideoPlayer.src = preweddingVideoPlayer.dataset.src;
-                }
-            }, 100); // 100 milliseconds is imperceptible to the user.
-            // --- END OF UPDATED FIX ---
+            // Now that audio is "unlocked" for the page, we can load the prewedding video.
+            if (preweddingVideoPlayer) {
+                preweddingVideoPlayer.src = preweddingVideoPlayer.dataset.src;
+            }
 
             // Fade out cover
             coverPage.classList.add('opacity-0');
@@ -394,6 +381,7 @@
 
 </body>
 </html>
+
 
 
 
