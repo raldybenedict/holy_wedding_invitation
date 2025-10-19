@@ -295,7 +295,7 @@
         </footer>
     </div>
 
-    <script>
+<script>
         // Open Invitation Logic
         const openButton = document.getElementById('open-invitation-btn');
         const coverPage = document.getElementById('invitation-cover');
@@ -304,7 +304,16 @@
         const preweddingVideoPlayer = document.getElementById('prewedding-video-player');
 
         openButton.addEventListener('click', () => {
-             // Set the main background video to play, but keep it muted.
+            // --- START OF FIX ---
+            // This is the key part for iOS. We play a tiny, silent audio file
+            // to "unlock" the browser's audio context. This must be done inside
+            // the user-initiated click event.
+            const audioUnlock = new Audio('data:audio/mp3;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAAgAAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV');
+            audioUnlock.volume = 0; // Ensure it's truly silent
+            audioUnlock.play().catch(() => {}); // Play and ignore any errors
+            // --- END OF FIX ---
+
+            // Set the main background video to play, but keep it muted.
             backgroundVideo.muted = true;
             backgroundVideo.play().catch(error => {
                 console.log("Browser prevented background video from playing:", error);
@@ -372,11 +381,11 @@
                 alert('There was an error submitting your RSVP. Please try again.');
             });
         });
-
-
     </script>
+
 </body>
 </html>
+
 
 
 
