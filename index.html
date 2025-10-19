@@ -5,18 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Wedding of Raldy Benedict & Angelica Libriana Soewito</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Custom Styles -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -75,7 +71,11 @@
 </head>
 <body class="text-gray-800">
 
-    <!-- Invitation Cover -->
+    <audio id="background-music" loop>
+        <source src="https://res.cloudinary.com/drmpxikjj/video/upload/v1758509115/WILD_All_My_Life_Official_Music_Video_vjkwxd.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <div id="invitation-cover" class="fixed inset-0 bg-cover bg-center z-50 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-1000 ease-in-out" style="background-image: url('https://res.cloudinary.com/drmpxikjj/image/upload/v1760244322/RED_1125-2_aaxpue.jpg');">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative z-10 fade-in text-white">
@@ -91,13 +91,11 @@
 
 
     <div id="main-content" class="opacity-0 transition-opacity duration-1000 ease-in-out">
-        <!-- 1. Background Video (will remain muted) -->
         <video autoplay muted loop playsinline id="bg-video">
             <source src="https://res.cloudinary.com/drmpxikjj/video/upload/Wedding_Video_By_Ola_Vfinal_fqcrs7.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
 
-        <!-- Hero Section -->
         <header class="relative bg-white/50 min-h-screen flex flex-col items-center justify-center text-white text-center p-4">
             <div class="overlay"></div>
             <div class="relative z-10">
@@ -109,14 +107,12 @@
                     We are Getting Married!
                 </p>
                 <div class="mt-8 border-t border-b border-white/50 py-4 px-8 inline-block">
-                    <!-- EDIT DATE -->
                     <p class="text-2xl tracking-widest">15 November 2025</p>
                 </div>
             </div>
         </header>
 
         <main class="relative bg-white/80 backdrop-blur-sm z-10">
-            <!-- Countdown Section -->
             <section class="py-20 text-center bg-stone-100 bg-opacity-50">
                 <div class="container mx-auto px-4">
                     <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-4">Counting Down The Days</h2>
@@ -141,7 +137,6 @@
                 </div>
             </section>
             
-            <!-- Opening Greeting -->
             <section class="py-20 text-center">
                 <div class="container mx-auto px-6 max-w-3xl">
                     <h3 class="text-3xl font-serif italic text-gray-600 mb-6">"I have found the one whom my soul loves." </h3>
@@ -149,7 +144,6 @@
                 </div>
             </section>
 
-            <!-- 2. Prewedding Video -->
             <section id="video" class="py-20">
                 <div class="container mx-auto px-4 text-center">
                     <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-12">Our Story</h2>
@@ -170,7 +164,6 @@
                 </div>
             </section>
 
-            <!-- 3. Prewedding Photos -->
             <section id="gallery" class="py-20 bg-stone-100 bg-opacity-50">
                 <div class="container mx-auto px-4">
                     <h2 class="text-4xl md:text-5xl font-serif text-center text-amber-900 mb-12">Our Moments</h2>
@@ -185,12 +178,10 @@
                 </div>
             </section>
 
-            <!-- 4. Location, Schedule, Google Maps -->
             <section id="details" class="py-20 bg-stone-100 bg-opacity-50">
                 <div class="container mx-auto px-4">
                     <h2 class="text-4xl md:text-5xl font-serif text-center text-amber-900 mb-12">Event Details</h2>
                     <div class="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
-                        <!-- Ceremony -->
                         <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                             <h3 class="text-3xl font-serif text-amber-800 mb-4">Holy Matrimony</h3>
                             <p class="text-lg font-semibold">Saturday, 15 November 2025</p>
@@ -208,7 +199,6 @@
                 </div>
             </section>
             
-            <!-- 5. RSVP -->
             <section id="rsvp" class="py-20">
                 <div class="container mx-auto px-4 max-w-2xl text-center">
                     <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-4">Are You Attending?</h2>
@@ -274,7 +264,6 @@
             </section>
             
             
-            <!-- 6. Digital Gifts -->
             <section id="gifts" class="py-20 bg-stone-100 bg-opacity-50">
                 <div class="container mx-auto px-4 max-w-2xl text-center">
                     <h2 class="text-4xl md:text-5xl font-serif text-amber-900 mb-4">Wedding Gift</h2>
@@ -303,9 +292,15 @@
         const mainContent = document.getElementById('main-content');
         const backgroundVideo = document.getElementById('bg-video');
         const preweddingVideoPlayer = document.getElementById('prewedding-video-player');
+        const backgroundMusic = document.getElementById('background-music'); // Get the audio element
 
         openButton.addEventListener('click', () => {
-             // Set the main background video to play, but keep it muted.
+            // Play background music - MODIFIED HERE
+            backgroundMusic.play().catch(error => {
+                console.log("Browser prevented background music from playing:", error);
+            });
+
+            // Set the main background video to play, but keep it muted.
             backgroundVideo.muted = true;
             backgroundVideo.play().catch(error => {
                 console.log("Browser prevented background video from playing:", error);
@@ -378,12 +373,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
